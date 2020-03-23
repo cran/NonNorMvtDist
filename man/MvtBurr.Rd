@@ -9,20 +9,24 @@
 \alias{smvburr}
 \title{Multivariate Burr Distribution}
 \usage{
-dmvburr(x, parm1 = 1, parm2 = rep(1, k), parm3 = rep(1, k),
-  log = FALSE)
+dmvburr(x, parm1 = 1, parm2 = rep(1, k), parm3 = rep(1, k), log = FALSE)
 
 pmvburr(q, parm1 = 1, parm2 = rep(1, k), parm3 = rep(1, k))
 
-qmvburr(p, parm1 = 1, parm2 = rep(1, k), parm3 = rep(1, k),
-  interval = c(0, 1e+08))
+qmvburr(
+  p,
+  parm1 = 1,
+  parm2 = rep(1, k),
+  parm3 = rep(1, k),
+  interval = c(0, 1e+08)
+)
 
 rmvburr(n, parm1 = 1, parm2 = rep(1, k), parm3 = rep(1, k))
 
 smvburr(q, parm1 = 1, parm2 = rep(1, k), parm3 = rep(1, k))
 }
 \arguments{
-\item{x}{vector or matrix of quantiles. If x is a matrix, each row vector constitutes a vector of quantiles for which the density f(x) is calculated (for \eqn{i}-th row \eqn{x_i}, \eqn{f(x_i)} is reported).}
+\item{x}{vector or matrix of quantiles. If \eqn{x} is a matrix, each row vector constitutes a vector of quantiles for which the density \eqn{f(x)} is calculated (for \eqn{i}-th row \eqn{x_i}, \eqn{f(x_i)} is reported).}
 
 \item{parm1}{a scalar parameter, see parameter \eqn{a} in \strong{Details}.}
 
@@ -30,7 +34,7 @@ smvburr(q, parm1 = 1, parm2 = rep(1, k), parm3 = rep(1, k))
 
 \item{parm3}{a vector of parameters, see parameters \eqn{c_i} in \strong{Details}.}
 
-\item{log}{logical; if TRUE, probability densities f are given as log(f).}
+\item{log}{logical; if TRUE, probability densities \eqn{f} are given as \eqn{log(f)}.}
 
 \item{q}{a vector of quantiles.}
 

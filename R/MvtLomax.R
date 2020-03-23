@@ -3,11 +3,11 @@
 #' @name MvtLomax
 #' @description Calculation of density function, cumulative distribution function, equicoordinate quantile function and survival function, and random numbers generation for multivariate Lomax (Pareto Type II) distribution with a scalar parameter \code{parm1} and vector parameter \code{parm2}.
 #'
-#' @param x vector or matrix of quantiles. If x is a matrix, each row vector constitutes a vector of quantiles for which the density f(x) is calculated (for \eqn{i}-th row \eqn{x_i}, \eqn{f(x_i)} is reported).
+#' @param x vector or matrix of quantiles. If \eqn{x} is a matrix, each row vector constitutes a vector of quantiles for which the density \eqn{f(x)} is calculated (for \eqn{i}-th row \eqn{x_i}, \eqn{f(x_i)} is reported).
 #' @param parm1 a scalar parameter, see parameter \eqn{a} in \strong{Details}.
 #' @param parm2 a vector of parameters, see parameters \eqn{\theta_i} in \strong{Details}.
 #' @param k dimension of data or number of variates.
-#' @param log logical; if TRUE, probability densities f are given as log(f).
+#' @param log logical; if TRUE, probability densities \eqn{f} are given as \eqn{log(f)}.
 #'
 #' @details
 #' Multivariate Lomax (Pareto type II) distribution was introduced by Nayak (1987) as a joint probability distribution of several skewed positive random variables \eqn{X_1, X_2, \cdots, X_k}. Its probability density function is given by

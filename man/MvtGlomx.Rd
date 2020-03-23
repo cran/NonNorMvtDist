@@ -9,22 +9,40 @@
 \alias{smvglomax}
 \title{Generalized Multivariate Lomax (Pareto Type II) Distribution}
 \usage{
-dmvglomax(x, parm1 = 1, parm2 = rep(1, k), parm3 = rep(1, k),
-  log = FALSE)
+dmvglomax(x, parm1 = 1, parm2 = rep(1, k), parm3 = rep(1, k), log = FALSE)
 
-pmvglomax(q, parm1 = 1, parm2 = rep(1, k), parm3 = rep(1, k),
-  algorithm = "Numerical", nsim = 1e+07)
+pmvglomax(
+  q,
+  parm1 = 1,
+  parm2 = rep(1, k),
+  parm3 = rep(1, k),
+  algorithm = c("numerical", "MC"),
+  nsim = 1e+07
+)
 
-qmvglomax(p, parm1 = 1, parm2 = rep(1, k), parm3 = rep(1, k),
-  interval = c(1e-08, 1e+08), algorithm = "Numerical", nsim = 1e+06)
+qmvglomax(
+  p,
+  parm1 = 1,
+  parm2 = rep(1, k),
+  parm3 = rep(1, k),
+  interval = c(1e-08, 1e+08),
+  algorithm = c("numerical", "MC"),
+  nsim = 1e+06
+)
 
 rmvglomax(n, parm1 = 1, parm2 = rep(1, k), parm3 = rep(1, k))
 
-smvglomax(q, parm1 = 1, parm2 = rep(1, k), parm3 = rep(1, k),
-  algorithm = "Numerical", nsim = 1e+07)
+smvglomax(
+  q,
+  parm1 = 1,
+  parm2 = rep(1, k),
+  parm3 = rep(1, k),
+  algorithm = c("numerical", "MC"),
+  nsim = 1e+07
+)
 }
 \arguments{
-\item{x}{vector or matrix of quantiles. If x is a matrix, each row vector constitutes a vector of quantiles for which the density f(x) is calculated (for \eqn{i}-th row \eqn{x_i}, \eqn{f(x_i)} is reported).}
+\item{x}{vector or matrix of quantiles. If \eqn{x} is a matrix, each row vector constitutes a vector of quantiles for which the density \eqn{f(x)} is calculated (for \eqn{i}-th row \eqn{x_i}, \eqn{f(x_i)} is reported).}
 
 \item{parm1}{a scalar parameter, see parameter \eqn{a} in \strong{Details}.}
 
@@ -32,11 +50,11 @@ smvglomax(q, parm1 = 1, parm2 = rep(1, k), parm3 = rep(1, k),
 
 \item{parm3}{a vector of parameters, see parameters \eqn{l_i} in \strong{Details}.}
 
-\item{log}{logical; if TRUE, probability densities f are given as log(f).}
+\item{log}{logical; if TRUE, probability densities \eqn{f} are given as \eqn{log(f)}.}
 
 \item{q}{a vector of quantiles.}
 
-\item{algorithm}{method to be used for calculating cumulative probability. Two options are provided as (i) \code{Numerical} using adaptive multivariate integral and (ii) \code{MC} using Monte Carlo method. Recommend algorithm \code{Numerical} for \eqn{(k <= 4)} dimension and \code{MC} for \eqn{(k > 4)} dimension based on running time consumption. Default option is set as \code{Numerical}.}
+\item{algorithm}{method to be used for calculating cumulative probability. Two options are provided as (i) \code{numerical} using adaptive multivariate integral and (ii) \code{MC} using Monte Carlo method. Recommend algorithm \code{numerical} for \eqn{(k <= 4)} dimension and \code{MC} for \eqn{(k > 4)} dimension based on running time consumption. Default option is set as \code{numerical}.}
 
 \item{nsim}{number of simulations used in algorithm \code{MC}.}
 
@@ -51,13 +69,21 @@ smvglomax(q, parm1 = 1, parm2 = rep(1, k), parm3 = rep(1, k),
 \value{
 \code{dmvglomax} gives the numerical values of the probability density.
 
-\code{pmvglomax} gives the cumulative probability.
+\code{pmvglomax} gives a list of two items:
 
-\code{qmvglomax} gives the equicoordinate quantile. The result is seed dependent if Monte Carlo algorithm is chosen  (\code{algorithm = "MC"}).
+\eqn{\quad} \code{value} cumulative probability
+
+\eqn{\quad} \code{error} the estimated relative error by \code{algorithm = "numerical"} or the estimated standard error by \code{algorithm = "MC"}
+
+\code{qmvglomax} gives the equicoordinate quantile. \code{NaN} is returned for no solution found in the given interval. The result is seed dependent if Monte Carlo algorithm is chosen  (\code{algorithm = "MC"}).
 
 \code{rmvglomax} generates random numbers.
 
-\code{smvglomax} gives the value of survival function.
+\code{smvglomax} gives a list of two items:
+
+\eqn{\quad} \code{value} the value of survial function
+
+\eqn{\quad} \code{error} the estimated relative error by \code{algorithm = "numerical"} or the estimated standard error by \code{algorithm = "MC"}
 }
 \description{
 Calculation of density function, cumulative distribution function, equicoordinate quantile function and survival function, and random numbers generation for generalized multivariate Lomax distribution with a scalar parameter \code{parm1} and vectors of parameters \code{parm2} and \code{parm3}.
@@ -75,8 +101,9 @@ Equicoordinate quantile is obtained by solving the following equation for \eqn{q
 \deqn{\int_{0}^{q} \cdots \int_{0}^{q} f(x_1, \cdots, x_k) dx_k \cdots dx_1 = p,}
 where \eqn{p} is the given cumulative probability.
 
-The survival function \eqn{\bar{F}(x_1, \cdots, x_k)} is obtained by the following formula related to cumulative distribution function \eqn{F(x_1, \dots, x_k)} (Joe, 1997)
-\deqn{\bar{F}(x_1, \cdots, x_k) = 1 + \sum_{S \in \mathcal{S}} (-1)^{|S|} F_S(x_j, j \in S).}
+The survival function \eqn{\bar{F}(x_1, \cdots, x_k)} is obtained either by the following formula related to cumulative distribution function \eqn{F(x_1, \dots, x_k)} (Joe, 1997)
+\deqn{\bar{F}(x_1, \cdots, x_k) = 1 + \sum_{S \in \mathcal{S}} (-1)^{|S|} F_S(x_j, j \in S),}
+or via Monte Carlo method.
 
 Random numbers from generalized multivariate Lomax distribution can be generated by simulating \eqn{k} independent gamma random variables having a common parameter following gamma distribution with shape parameter \eqn{a} and scale parameter \eqn{1}; see Nayak (1987).
 }

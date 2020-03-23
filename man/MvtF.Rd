@@ -11,25 +11,30 @@
 \usage{
 dmvf(x, df = rep(1, k + 1), log = FALSE)
 
-pmvf(q, df = rep(1, k + 1), algorithm = "Numerical", nsim = 1e+07)
+pmvf(q, df = rep(1, k + 1), algorithm = c("numerical", "MC"), nsim = 1e+07)
 
-qmvf(p, df = rep(1, k + 1), interval = c(1e-08, 1e+08),
-  algorithm = "Numerical", nsim = 1e+06)
+qmvf(
+  p,
+  df = rep(1, k + 1),
+  interval = c(1e-08, 1e+08),
+  algorithm = c("numerical", "MC"),
+  nsim = 1e+06
+)
 
 rmvf(n, df = rep(1, k + 1))
 
-smvf(q, df = rep(1, k + 1), algorithm = "Numerical", nsim = 1e+07)
+smvf(q, df = rep(1, k + 1), algorithm = c("numerical", "MC"), nsim = 1e+07)
 }
 \arguments{
-\item{x}{vector or matrix of quantiles. If x is a matrix, each row vector constitutes a vector of quantiles for which the density f(x) is calculated (for \eqn{i}-th row \eqn{x_i}, \eqn{f(x_i)} is reported).}
+\item{x}{vector or matrix of quantiles. If \eqn{x} is a matrix, each row vector constitutes a vector of quantiles for which the density \eqn{f(x)} is calculated (for \eqn{i}-th row \eqn{x_i}, \eqn{f(x_i)} is reported).}
 
 \item{df}{a vector of \eqn{k+1} degrees of freedom, see parameter \eqn{(2a, 2l_1, \ldots, 2l_k)} in \strong{Details}.}
 
-\item{log}{logical; if TRUE, probability densities f are given as log(f).}
+\item{log}{logical; if TRUE, probability densities \eqn{f} are given as \eqn{log(f)}.}
 
 \item{q}{a vector of quantiles.}
 
-\item{algorithm}{method to be used for calculating cumulative probability. Two options are provided as (i) \code{Numerical} using adaptive multivariate integral and (ii) \code{MC} using Monte Carlo method. Recommend algorithm \code{Numerical} for \eqn{(k <= 4)} dimension and \code{MC} for \eqn{(k > 4)} dimension based on running time consumption. Default option is set as \code{Numerical}.}
+\item{algorithm}{method to be used for calculating cumulative probability. Two options are provided as (i) \code{numerical} using adaptive multivariate integral and (ii) \code{MC} using Monte Carlo method. Recommend algorithm \code{numerical} for \eqn{(k <= 4)} dimension and \code{MC} for \eqn{(k > 4)} dimension based on running time consumption. Default option is set as \code{numerical}.}
 
 \item{nsim}{number of simulations used in algorithm \code{MC}.}
 
@@ -44,19 +49,27 @@ smvf(q, df = rep(1, k + 1), algorithm = "Numerical", nsim = 1e+07)
 \value{
 \code{dmvf} gives the numerical values of the probability density.
 
-\code{pmvglomax} gives the cumulative probability.
+\code{pmvf} gives a list of two items:
 
-\code{qmvf} gives the equicoordinate quantile. The result is seed dependent if Monte Carlo algorithm is chosen  (\code{algorithm = "MC"}).
+\eqn{\quad} \code{value} cumulative probability
+
+\eqn{\quad} \code{error} the estimated relative error by \code{algorithm = "numerical"} or the estimated standard error by \code{algorithm = "MC"}
+
+\code{qmvf} gives the equicoordinate quantile. \code{NaN} is returned for no solution found in the given interval. The result is seed dependent if Monte Carlo algorithm is chosen  (\code{algorithm = "MC"}).
 
 \code{rmvf} generates random numbers.
 
-\code{smvf} gives the value of survival function.
+\code{smvf} gives a list of two items:
+
+\eqn{\quad} \code{value} the value of survial function
+
+\eqn{\quad} \code{error} the estimated relative error by \code{algorithm = "numerical"} or the estimated standard error by \code{algorithm = "MC"}
 }
 \description{
-Calculation of density function, cumulative distribution function, equicoordinate quantile function and survival function, and random numbers generation for multivariate F distribution with degrees of freedom \code{df}.
+Calculation of density function, cumulative distribution function, equicoordinate quantile function and survival function, and random numbers generation for multivariate \eqn{F} distribution with degrees of freedom \code{df}.
 }
 \details{
-Multivariate F distribution (Johnson and Kotz, 1972) is a joint probability distribution of positive random variables and its probability density is given as
+Multivariate \eqn{F} distribution (Johnson and Kotz, 1972) is a joint probability distribution of positive random variables and its probability density is given as
 \deqn{f(x_1, \cdots, x_k) = \frac{[ \prod_{i=1}^{k} (l_i/a)^{l_i}] \Gamma(\sum_{i=1}^{k} l_i + a) \prod_{i=1}^{k} x_i^{l_i-1}}{\Gamma(a) [ \prod_{i=1}^{k} \Gamma(l_i)] (1+\sum_{i=1}^{k} \frac{l_i}{a}x_i )^{\sum_{i=1}^{k} l_i + a}},}
 where \eqn{x_i>0, a>0, l_i>0, i=1,\cdots, k}. The degrees of freedom are \eqn{(2a, 2l_1,\dots,2l_k)}.
 
@@ -68,8 +81,9 @@ Equicoordinate quantile is obtained by solving the following equation for \eqn{q
 \deqn{\int_{0}^{q} \cdots \int_{0}^{q} f(x_1, \cdots, x_k) dx_k \cdots dx_1 = p,}
 where \eqn{p} is the given cumulative probability.
 
-The survival function \eqn{\bar{F}(x_1, \cdots, x_k)} is obtained by the following formula related to cumulative distribution function \eqn{F(x_1, \dots, x_k)} (Joe, 1997)
-\deqn{\bar{F}(x_1, \cdots, x_k) = 1 + \sum_{S \in \mathcal{S}} (-1)^{|S|} F_S(x_j, j \in S).}
+The survival function \eqn{\bar{F}(x_1, \cdots, x_k)} is obtained either by the following formula related to cumulative distribution function \eqn{F(x_1, \dots, x_k)} (Joe, 1997)
+\deqn{\bar{F}(x_1, \cdots, x_k) = 1 + \sum_{S \in \mathcal{S}} (-1)^{|S|} F_S(x_j, j \in S),}
+or via Monte Carlo method.
 
 Random numbers \eqn{X_1, \cdots, X_k} from multivariate F distribution can be generated through parameter substitutions in simulation of generalized multivariate Lomax distribution by letting \eqn{\theta_i = l_i/a, i = 1, \cdots, k}; see Nayak (1987).
 }
@@ -81,7 +95,7 @@ Random numbers \eqn{X_1, \cdots, X_k} from multivariate F distribution can be ge
 dmvf(x = c(1, 2), df = c(2, 4, 6)) # Density
 
 # Cumulative Probability using adaptive multivariate integral
-pmvf(q = c(1, 2), df = c(2, 4, 6), algorithm = "Numerical")
+pmvf(q = c(1, 2), df = c(2, 4, 6), algorithm = "numerical")
 
 \donttest{
 # Cumulative Probability using Monte Carlo method
@@ -92,7 +106,7 @@ pmvf(q = c(1, 2), df = c(2, 4, 6), algorithm = "MC")}
 qmvf(p = 0.5, df = c(2, 4, 6))}
 
 # Random numbers generation with sample size 100
-rmvf(n = 100, df = c(2, 4, 6)) 
+rmvf(n = 100, df = c(2, 4, 6))
 
 smvf(q = c(1, 2), df = c(2, 4, 6)) # Survival function
 

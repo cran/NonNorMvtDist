@@ -2,12 +2,12 @@
 #' Multivariate Burr Distribution
 #' @name MvtBurr
 #' @description Calculation of density function, cumulative distribution function, equicoordinate quantile function and survival function, and random numbers generation for multivariate Burr distribution with a scalar parameter \code{parm1} and vectors of parameters \code{parm2} and \code{parm3}.
-#' @param x vector or matrix of quantiles. If x is a matrix, each row vector constitutes a vector of quantiles for which the density f(x) is calculated (for \eqn{i}-th row \eqn{x_i}, \eqn{f(x_i)} is reported).
+#' @param x vector or matrix of quantiles. If \eqn{x} is a matrix, each row vector constitutes a vector of quantiles for which the density \eqn{f(x)} is calculated (for \eqn{i}-th row \eqn{x_i}, \eqn{f(x_i)} is reported).
 #' @param parm1 a scalar parameter, see parameter \eqn{a} in \strong{Details}.
 #' @param parm2 a vector of parameters, see parameters \eqn{d_i} in \strong{Details}.
 #' @param parm3 a vector of parameters, see parameters \eqn{c_i} in \strong{Details}.
 #' @param k dimension of data or number of variates.
-#' @param log logical; if TRUE, probability densities f are given as log(f).
+#' @param log logical; if TRUE, probability densities \eqn{f} are given as \eqn{log(f)}.
 #'
 #' @details
 #' Multivariate Burr distribution (Johnson and Kotz, 1972) is a joint distribution of positive random variables \eqn{X_1, \cdots, X_k}. Its probability density is given as

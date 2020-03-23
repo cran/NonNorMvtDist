@@ -11,29 +11,45 @@
 \usage{
 dmvinvbeta(x, parm1 = 1, parm2 = rep(1, k), log = FALSE)
 
-pmvinvbeta(q, parm1 = 1, parm2 = rep(1, k), algorithm = "Numerical",
-  nsim = 1e+07)
+pmvinvbeta(
+  q,
+  parm1 = 1,
+  parm2 = rep(1, k),
+  algorithm = c("numerical", "MC"),
+  nsim = 1e+07
+)
 
-qmvinvbeta(p, parm1 = 1, parm2 = rep(1, k), interval = c(1e-08,
-  1e+08), algorithm = "Numerical", nsim = 1e+06)
+qmvinvbeta(
+  p,
+  parm1 = 1,
+  parm2 = rep(1, k),
+  interval = c(1e-08, 1e+08),
+  algorithm = c("numerical", "MC"),
+  nsim = 1e+06
+)
 
 rmvinvbeta(n, parm1 = 1, parm2 = rep(1, k))
 
-smvinvbeta(q, parm1 = 1, parm2 = rep(1, k), algorithm = "Numerical",
-  nsim = 1e+07)
+smvinvbeta(
+  q,
+  parm1 = 1,
+  parm2 = rep(1, k),
+  algorithm = c("numerical", "MC"),
+  nsim = 1e+07
+)
 }
 \arguments{
-\item{x}{vector or matrix of quantiles. If x is a matrix, each row vector constitutes a vector of quantiles for which the density f(x) is calculated (for \eqn{i}-th row \eqn{x_i}, \eqn{f(x_i)} is reported).}
+\item{x}{vector or matrix of quantiles. If \eqn{x} is a matrix, each row vector constitutes a vector of quantiles for which the density \eqn{f(x)} is calculated (for \eqn{i}-th row \eqn{x_i}, \eqn{f(x_i)} is reported).}
 
 \item{parm1}{a scalar parameter, see parameter \eqn{a} in \strong{Details}.}
 
 \item{parm2}{a vector of parameters, see parameter \eqn{l_i} in \strong{Details}.}
 
-\item{log}{logical; if TRUE, probability densities f are given as log(f).}
+\item{log}{logical; if TRUE, probability densities \eqn{f} are given as \eqn{log(f)}.}
 
 \item{q}{a vector of quantiles.}
 
-\item{algorithm}{method to be used for calculating cumulative probability. Two options are provided as (i) \code{Numerical} using adaptive multivariate integral and (ii) \code{MC} using Monte Carlo method. Recommend algorithm \code{Numerical} for \eqn{(k <= 4)} dimension and \code{MC} for \eqn{(k > 4)} dimension based on running time consumption. Default option is set as \code{Numerical}.}
+\item{algorithm}{method to be used for calculating cumulative probability. Two options are provided as (i) \code{numerical} using adaptive multivariate integral and (ii) \code{MC} using Monte Carlo method. Recommend algorithm \code{numerical} for \eqn{(k <= 4)} dimension and \code{MC} for \eqn{(k > 4)} dimension based on running time consumption. Default option is set as \code{numerical}.}
 
 \item{nsim}{number of simulations used in algorithm \code{MC}.}
 
@@ -48,13 +64,21 @@ smvinvbeta(q, parm1 = 1, parm2 = rep(1, k), algorithm = "Numerical",
 \value{
 \code{dmvinvbeta} gives the numerical values of the probability density.
 
-\code{pmvinvbeta} gives the cumulative probability.
+\code{pmvinvbeta} gives a list of two items:
 
-\code{qmvinvbeta} gives the equicoordinate quantile. The result is seed dependent if Monte Carlo algorithm is chosen  (\code{algorithm = "MC"}).
+\eqn{\quad} \code{value} cumulative probability
+
+\eqn{\quad} \code{error} the estimated relative error by \code{algorithm = "numerical"} or the estimated standard error by \code{algorithm = "MC"}
+
+\code{qmvinvbeta} gives the equicoordinate quantile. \code{NaN} is returned for no solution found in the given interval. The result is seed dependent if Monte Carlo algorithm is chosen  (\code{algorithm = "MC"}).
 
 \code{rmvinvbeta} generates random numbers.
 
-\code{smvinvbeta} gives the value of survival function.
+\code{smvinvbeta} gives a list of two items:
+
+\eqn{\quad} \code{value} the value of survial function
+
+\eqn{\quad} \code{error} the estimated relative error by \code{algorithm = "numerical"} or the estimated standard error by \code{algorithm = "MC"}
 }
 \description{
 Calculation of density function, cumulative distribution function, equicoordinate quantile function and survival function, and random numbers generation for multivariate inverted beta distribution with a scalar parameter \code{parm1} and a vector of parameters \code{parm2}.
@@ -72,8 +96,9 @@ Equicoordinate quantile is obtained by solving the following equation for \eqn{q
 \deqn{\int_{0}^{q} \cdots \int_{0}^{q} f(x_1, \cdots, x_k) dx_k \cdots dx_1 = p,}
 where \eqn{p} is the given cumulative probability.
 
-The survival function \eqn{\bar{F}(x_1, \cdots, x_k)} is obtained by the following formula related to cumulative distribution function \eqn{F(x_1, \dots, x_k)} (Joe, 1997)
-\deqn{\bar{F}(x_1, \cdots, x_k) = 1 + \sum_{S \in \mathcal{S}} (-1)^{|S|} F_S(x_j, j \in S).}
+The survival function \eqn{\bar{F}(x_1, \cdots, x_k)} is obtained either by the following formula related to cumulative distribution function \eqn{F(x_1, \dots, x_k)} (Joe, 1997)
+\deqn{\bar{F}(x_1, \cdots, x_k) = 1 + \sum_{S \in \mathcal{S}} (-1)^{|S|} F_S(x_j, j \in S),}
+or via Monte Carlo method.
 
 Random numbers \eqn{X_1, \cdots, X_k} from multivariate inverted beta distribution can be generated through parameter substitutions in simulation of generalized multivariate Lomax distribution by letting \eqn{\theta_i = 1, i = 1, \cdots, k}.
 }
@@ -96,7 +121,7 @@ pmvinvbeta(q = c(2, 4), parm1 = 7, parm2 = c(1, 3), algorithm = "MC")}
 qmvinvbeta(p = 0.5, parm1 = 7, parm2 = c(1, 3))}
 
 # Random numbers generation with sample size 100
-rmvinvbeta(n = 100, parm1 = 7, parm2 = c(1, 3)) 
+rmvinvbeta(n = 100, parm1 = 7, parm2 = c(1, 3))
 
 smvinvbeta(q = c(2, 4), parm1 = 7, parm2 = c(1, 3)) # Survival function
 

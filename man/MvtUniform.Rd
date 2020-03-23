@@ -20,11 +20,11 @@ rmvunif(n, parm = 1, dim = 1)
 smvunif(q, parm = 1)
 }
 \arguments{
-\item{x}{vector or matrix of quantiles. If x is a matrix, each row vector constitutes a vector of quantiles for which the density f(x) is calculated (for \eqn{i}-th row \eqn{x_i}, \eqn{f(x_i)} is reported).}
+\item{x}{vector or matrix of quantiles. If \eqn{x} is a matrix, each row vector constitutes a vector of quantiles for which the density \eqn{f(x)} is calculated (for \eqn{i}-th row \eqn{x_i}, \eqn{f(x_i)} is reported).}
 
 \item{parm}{a scalar parameter, see parameter \eqn{a} in \strong{Details}.}
 
-\item{log}{logical; if TRUE, probability densities f are given as log(f).}
+\item{log}{logical; if TRUE, probability densities \eqn{f} are given as \eqn{log(f)}.}
 
 \item{q}{a vector of quantiles.}
 
@@ -53,7 +53,7 @@ Calculation of density function, cumulative distribution function, equicoordinat
 \details{
 Multivariate uniform distribution of Cook and Johnson (1981) is a joint distribution of uniform variables over \eqn{(0,1]} and its probability density is given as
 \deqn{f(x_1, \cdots, x_k) = \frac{\Gamma(a+k)}{\Gamma(a)a^k}\prod_{i=1}^{k} x_i^{(-1/a)-1} \left[\sum_{i=1}^{k} x_i^{-1/a} - k +1 \right]^{-(a+k)},}
-where \eqn{0 < x_i <=1, a>0, i=1,\cdots, k}.
+where \eqn{0 < x_i <=1, a>0, i=1,\cdots, k}. In fact, Cook-Johnson's uniform distribution is also called Clayton copula (Nelsen, 2006).
 
 Cumulative distribution function \eqn{F(x_1, \dots, x_k)} is given as
 \deqn{F(x_1, \cdots, x_k) = \left[ \sum_{i=1}^{k} x_i^{-1/a} - k + 1 \right]^{-a}.}
@@ -77,10 +77,10 @@ dmvunif(x = c(0.8, 0.5, 0.2), parm = 2) # Density
 pmvunif(q = c(0.8, 0.5, 0.2), parm = 2) # Cumulative Probability
 
 # Equicoordinate quantile of cumulative probability 0.5
-qmvunif(p = 0.5, parm = 2, dim = 3) 
+qmvunif(p = 0.5, parm = 2, dim = 3)
 
 # Random numbers generation with sample size 100
-rmvunif(n = 100, parm = 2, dim = 3) 
+rmvunif(n = 100, parm = 2, dim = 3)
 
 smvunif(q = c(0.8, 0.5, 0.2), parm = 3) # Survival function
 
@@ -91,6 +91,8 @@ Cook, R. E. and Johnson, M. E. (1981). A family of distributions for modeling no
 Joe, H. (1997). \emph{Multivariate Models and Dependence Concepts}. London: Chapman & Hall.
 
 Nayak, T. K. (1987). Multivariate Lomax Distribution: Properties and Usefulness in Reliability Theory. \emph{Journal of Applied Probability}, Vol. 24, No. 1, 170-177.
+
+Nelsen, R. B. (2006). \emph{An Introduction to Copulas, Second Edition}. New York: Springer.
 }
 \seealso{
 \code{\link{uniroot}} for one dimensional root (zero) finding.

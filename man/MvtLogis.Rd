@@ -13,21 +13,20 @@ dmvlogis(x, parm1 = rep(1, k), parm2 = rep(1, k), log = FALSE)
 
 pmvlogis(q, parm1 = rep(1, k), parm2 = rep(1, k))
 
-qmvlogis(p, parm1 = rep(1, k), parm2 = rep(1, k), interval = c(0,
-  1e+08))
+qmvlogis(p, parm1 = rep(1, k), parm2 = rep(1, k), interval = c(0, 1e+08))
 
 rmvlogis(n, parm1 = rep(1, k), parm2 = rep(1, k))
 
 smvlogis(q, parm1 = rep(1, k), parm2 = rep(1, k))
 }
 \arguments{
-\item{x}{vector or matrix of quantiles. If x is a matrix, each row vector constitutes a vector of quantiles for which the density f(x) is calculated (for \eqn{i}-th row \eqn{x_i}, \eqn{f(x_i)} is reported).}
+\item{x}{vector or matrix of quantiles. If \eqn{x} is a matrix, each row vector constitutes a vector of quantiles for which the density \eqn{f(x)} is calculated (for \eqn{i}-th row \eqn{x_i}, \eqn{f(x_i)} is reported).}
 
 \item{parm1}{a vector of location parameters, see parameter \eqn{\mu_i} in \strong{Details}.}
 
 \item{parm2}{a vector of scale parameters, see parameters \eqn{\sigma_i} in \strong{Details}.}
 
-\item{log}{logical; if TRUE, probability densities f are given as log(f).}
+\item{log}{logical; if TRUE, probability densities \eqn{f} are given as \eqn{log(f)}.}
 
 \item{q}{a vector of quantiles.}
 
