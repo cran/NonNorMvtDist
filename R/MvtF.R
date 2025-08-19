@@ -24,7 +24,7 @@
 #'
 #' Cumulative distribution function \eqn{F(x_1, \dots, x_k)} is obtained by multiple integral
 #' \deqn{F(x_1, \dots, x_k) = \int_{0}^{x_1} \cdots  \int_{0}^{x_k} f(y_1, \cdots, y_k) dy_k \cdots dy_1.}
-#' This multiple integral is calculated by either adaptive multivariate integration using \code{\link{hcubature}} in package \strong{\link{cubature}} (Narasimhan et al., 2018) or via Monte Carlo method.
+#' This multiple integral is calculated by either adaptive multivariate integration using \code{\link[cubature]{hcubature}} in package \strong{\link[cubature]{cubature}} (Narasimhan et al., 2018) or via Monte Carlo method.
 #'
 #' Equicoordinate quantile is obtained by solving the following equation for \eqn{q} through the built-in one dimension root finding function \code{\link{uniroot}}:
 #' \deqn{\int_{0}^{q} \cdots \int_{0}^{q} f(x_1, \cdots, x_k) dx_k \cdots dx_1 = p,}
